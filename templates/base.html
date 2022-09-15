@@ -6,6 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'bootstrap-icons/font/bootstrap-icons.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -20,7 +22,7 @@
                     <div class="container">
                         <!-- Ancora do logo deve levar à página home-->
                         <!-- Colocar o logo no S3 -->
-                        <a href="#" class="navbar-brand"><img src="{% static 'img/logo-mais-fit-transparente.png' %}" alt=""></a>
+                        <a href="{% url 'index'%}" class="navbar-brand"><img src="{% static 'img/logo-mais-fit-transparente.png' %}" alt=""></a>
                         <!-- Botão hamburguer para guardar o menu em telas pequenas -->
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                             <span class="navbar-toggler-icon"></span>
@@ -32,7 +34,7 @@
                                 <li class="nav-item">
                                     <li class="nav-item">
                                         <!-- Deve levar à página home -->
-                                        <a class="nav-link text-white" href="#">Início</a>
+                                        <a class="nav-link text-white" href="{% url 'index'%}">Início</a>
                                     </li>
                                     <li class="nav-item">
                                         <!-- Deve levar à página de contato da empresa -->
@@ -53,9 +55,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <span class="badge rounded-pill bg-light text-danger position-absolute ms-4 mt-0"
-                                            title="5 produto(s) no carrinho"><small>5</small></span>
+                                            title="produto(s) no carrinho"><small id="qtdProd"></small></span>
                                         <!-- Deve levar à página do carrinho -->
-                                        <a href="URL do Carrinho aqui" class="nav-link text-white">
+                                        <a href="{% url 'carrinho'%}" class="nav-link text-white">
                                             <i class="bi-cart" style="font-size:24px;line-height:24px;"></i>
                                         </a>
                                     </li>
@@ -64,11 +66,10 @@
                         </div>
                     </div>
                 </nav>
-                <!-- bloco que permite ser colocado qualquer coisa no header nas outras páginas -->
-                {% block header %} {% endblock %}
+                <!--FIM Barra de navegação -->
             </header>
 
-            <main class="flex-fill">
+            <main class="flex-fill wrapper">
                 <div class="container">
                     <!-- bloco para por conteúdo em outras páginas -->
                     {% block content %} {% endblock %}
@@ -113,8 +114,11 @@
                 {% block footer %}
                 {% endblock %}
             </footer>
-        {% block scripts %}
-            <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-        {% endblock %}
+            <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script> 
+            <script src="{% static '/js/main.js' %}"></script>
+            {% block scripts %}
+
+            {% endblock %}
+
     </body>
 </html>
