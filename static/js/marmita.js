@@ -1,39 +1,3 @@
-// criar um json com o id do kit, ids das marmitas e qtds para por num COOKIE
-
-
-
-// var produtos = [
-//     {
-//         "kit": 1,
-//         "marmitas": [
-//             {"marmita_id": 1, "qtd_marmita": 5},
-//             {"marmita_id": 2, "qtd_marmita": 5}
-//         ]
-//     },
-//     {
-//         "kit": 2,
-//         "marmitas": [
-//             {"marmita_id": 1, "qtd_marmita": 5},
-//             {"marmita_id": 2, "qtd_marmita": 10}
-//         ]
-//     }
-// ]
-
-
-// var produto = {
-//     "kit": 2,
-//     "marmitas": [
-//         {"marmita_id": 1, "qtd_marmita": 5},
-//         {"marmita_id": 2, "qtd_marmita": 10}
-//     ]
-// }
-
-
-
-// o botão enviar para o carrinho pega o produto e coloca em um Cookie
-// também redireciona para a index. O carrinho deve reconhecer que há um cookie
-// e atualizar a quantidade de itens
-
 const btnEnviaCarrinho = document.getElementById("envia-carrinho")
 const controles = document.querySelectorAll("[data-controle]")
 const qtdMax = document.getElementById("qtd-marmitas")
@@ -41,15 +5,16 @@ const inputQtdMarEscolhida = document.getElementById("qtd-escolhida")
 const kitId = document.getElementById("kit_id").value
 let qtdAtual = 0
 
-// será transformado em cookie
-// é a lista de produtos que estará no carrinho
-let produtos = []
-// é o produto a ser anexado na lista
-// caso já exista o cookie produtos, pegamos o cookie produutos, anexamos o
-// produto novo apagamos o cookie produtos do browse e setamos ele novamente
-// com o novo produto
-let produto = {}
 
+btnEnviaCarrinho.disabled = true;
+
+// é o produto a ser anexado na lista produtos dentro do localStorage
+let produto = {
+    "kit": kitId,
+    "marmitas": []
+}
+
+// adiciona ações ao evento click dos botões de controle
 controles.forEach(ctrl => {
     ctrl.onclick = evento => {
         const operacao = evento.target.dataset.controle
@@ -59,15 +24,19 @@ controles.forEach(ctrl => {
 });
 
 
+// esta função deve manipular a quantidade das marmitas conforme o click nos
+// botões de controle
 function manipulaDados(operacao, controle){
     // devo pegar o id do kit também
     // devo pegar o id da marmita para por no objeto produto
     const contador = controle.querySelector("[data-contador]")
     const marmitaId = controle.querySelector("#marmita_id").value
 
-
+    // lógica para adicionar/remover marmita no contador
     if(operacao === "-"){
         contador.value = parseInt(contador.value) -1;
+        removeMarmitaNoProduto(produto, marmitaId)
+        btnEnviaCarrinho.disabled = true;
         if(parseInt(contador.value) < 0) {
             contador.value = "0"
 
@@ -80,62 +49,81 @@ function manipulaDados(operacao, controle){
         contador.value = parseInt(contador.value) + 1;
         qtdAtual += 1
         inputQtdMarEscolhida.value = qtdAtual
-
+        adicionaMarmitaNoProduto(produto, marmitaId)
+    }
+    // habilita botão de envio para o carrinho
+    if (qtdAtual === parseInt(qtdMax.value)){
+        btnEnviaCarrinho.disabled = false;
     }
 }
+
+
 // verifica se a marmita está em produto
 function verificaMarmitaEmProduto(produto, marmitaId){
     // retorna se marmita existe em produto
+    let marmita = produto.marmitas.filter((marmita)=>{
+        return (marmita.marmita_id === marmitaId)
+    });
+    return marmita
 }
 
+
 // adiciona marmita no produto
-function addMarmitaNoProduto(produto, marmitaId){
+function adicionaMarmitaNoProduto(produto, marmitaId){
     // se a marmita existir vai apenas adicionar mais 1 a quantidade
     // se a marmita não existir criará o objeto marmita na lista
+    let marmita = verificaMarmitaEmProduto(produto, marmitaId)
+
+    if (marmita.length == 0) {
+        // cria marmita no produto adicionando à lista de marmitas
+        const marmita = {"marmita_id": marmitaId, "qtd_marmita": 1}
+        produto.marmitas.push(marmita)
+    }else {
+        produto.marmitas.forEach((marmita)=>{
+            if (marmita.marmita_id === marmitaId){
+                marmita.qtd_marmita +=1
+            }
+        })
+    }
 }
+
 
 function removeMarmitaNoProduto(produto, marmitaId){
     // se marmita existir retira 1 da quantidade
     // se a quantidade zerar deve apagar o objeto marmita da lista
     // se a marmita não existir não faz nada
-}
-// exemplo de produto
-// var produto = {
-//     "kit": 2,
-//     "marmitas": [
-//         {"marmita_id": 1, "qtd_marmita": 5},
-//         {"marmita_id": 2, "qtd_marmita": 10}
-//     ]
-// }
-
-
-// btnEnviaCarrinho.onclick = () => {
-
-//     // só deve gravar o cookie se tudo estiver certo
-//     // - o objeto produto deve ter o kit e as marmitas com suas quantidades
-
-
-//     // setCookie(produtos)
-//     // cookie = JSON.parse(getCookie("produtos"))
-//     // console.log(cookie)
-// }
-
-
-function getCookie(name){
-    let nameEQ = name + "=";
-    let ca = document.cookie.split(";");
-
-    for(let i = 0; i < ca.length; i++){
-        var c = ca[i];
-        while(c.charAt(0)==' ') c = c.substring(1, c.length);
-        if(c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    let marmita = verificaMarmitaEmProduto(produto, marmitaId)
+    if (marmita.length > 0){
+        produto.marmitas.forEach((marmita)=>{
+            if (marmita.marmita_id === marmitaId){
+                marmita.qtd_marmita -=1
+                if(marmita.qtd_marmita == 0){
+                    const indice = produto.marmitas.indexOf(marmita)
+                    let novaListaMarmitas = produto.marmitas.filter((marmita)=>{
+                        return (marmita.qtd_marmita != 0)
+                    });
+                    produto.marmitas = novaListaMarmitas
+                }
+            }
+        })
     }
-    return null;
 }
 
-function setCookie(name){
-    if (document.cookie.indexOf("produtos") < 0){
-        console.log("criando cookie");
-        document.cookie="produtos="+JSON.stringify(name)
-    }
+
+// só pode ser habilitado quando qtdAtual == a qtdMax
+// essa função vai colocar no localStorage os produtos
+btnEnviaCarrinho.onclick = () => {
+    // verificar se já existe a key produtos no localStorage
+    // se a key não existir, criar uma lista de produtos e anexar nela
+    // o produto criado. Após, setar a lista de produtos no localStorage
+    let produtos = JSON.parse(localStorage.getItem('produtos')) || []
+    produtos.push(produto)
+
+    let produtosStr = JSON.stringify(produtos)
+    localStorage.setItem("produtos", produtosStr)
+
+    const qtdProdutos = document.getElementById("qtdProd")
+    qtdProdutos.textContent = produtos.length
+
+    window.location = "/carrinho"
 }
