@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from produtos.views import lista_kits, lista_marmitas
+from produtos.views import lista_kits, lista_marmitas, carrinho_de_compra
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lista_kits, name='index'),
     path('marmitas/<int:kit_id>', lista_marmitas, name='marmitas'),
+    path('carrinho', carrinho_de_compra, name='carrinho')
 ]
