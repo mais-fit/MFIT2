@@ -1,9 +1,10 @@
-from dataclasses import fields
+import json
 from django.shortcuts import render
-from django.views.generic import ListView
-from django.http import HttpResponse, HttpRequest
+from django.views.decorators.csrf import csrf_exempt
+# from django.views.generic import ListView
+# from django.http import HttpResponse, HttpRequest
 
-from produtos.models import Kit, Marmita
+from produtos.models import Kits, Marmitas
 
 
 # class KitList(ListView):
@@ -12,7 +13,7 @@ from produtos.models import Kit, Marmita
 #     queryset = Kit.objects.filter(ativo=True)
 
 def lista_kits(request):
-    kits = Kit.objects.filter(ativo=True)
+    kits = Kits.objects.filter(ativo=True)
     return render(
         request,
         "index.html",
@@ -29,10 +30,11 @@ def lista_kits(request):
 
 def lista_marmitas(request, kit_id):
     # rendereiza o kit escolhido e as marmitas a serem escolhidas
-    marmitas = Marmita.objects.filter(ativo=True)
-    kit = Kit.objects.get(id=kit_id)
+    marmitas = Marmitas.objects.filter(ativo=True)
+    kit = Kits.objects.get(id=kit_id)
     request.session["kit_id"] = kit.id
     print(request.session["kit_id"])
+    print(request)
     return render(
                     request, 
                     "marmita.html", 
@@ -41,3 +43,7 @@ def lista_marmitas(request, kit_id):
                         "kit": kit
                     }
                 )
+
+
+def carrinho_de_compra(request):
+    return render(request, "carrinho.html")
