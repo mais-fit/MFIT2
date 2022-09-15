@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<h1>Carrinho de Compras</h1>
+
+<ul class="list-group mb-3">
+
+
+    <li class="list-group-item py-3">
+        <div class="text-end">
+            <h4 class="text-dark mb-3">
+                Valor Total: R$ 63,84
+            </h4>
+            <a href="{% url 'index'%}" class="btn btn-outline-success btn-lg">
+                Continuar Comprando
+            </a>
+            <a href="/fechamento_itens.html" class="btn btn-danger btn-lg ms-2 mt-xs-3">Fechar Compra</a>
+        </div>
+    </li>
+</ul>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/carrinho.js' %}"></script>
+{% endblock %}
