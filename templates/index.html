@@ -71,7 +71,7 @@
                 </a>
                 <!-- Deve levar à tela de marmitas -->
                 <a href="{% url 'marmitas' kit.id %}">
-                    <!-- Colocar imagens de marmitas no S3 -->
+                    <!-- Colocar imagens de marmitas dos kits -->
                     <img src="{% static 'img/'|add:kit.link %}" class="card-img-top">
                 </a>
                 <div class="card-header">
@@ -80,10 +80,10 @@
                 </div>
                 <div class="card-body">
                     <!-- Mudar o campo do kit para nome -->
-                    <h5 class="card-title">{{ kit.titulo }}</h5>
+                    <h5 class="card-title">{{ kit.descricao }}</h5>
                     <p class="card-text truncar-3l">
                         <!-- Na tabela kit deve haver um campo de descrição -->
-                        {{ kit.descricao }}
+                        Escolha seu kit e aproveite suas refeições
                     </p>
                 </div>
                 <div class="card-footer">
@@ -100,4 +100,8 @@
 
 <hr mt-3>
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static '/js/index.js' %}"></script>
 {% endblock %}
