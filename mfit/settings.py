@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,11 +82,16 @@ WSGI_APPLICATION = 'mfit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mfit_django',
-        'USER': 'root',
-        'PASSWORD': 'dinossauro12',
-        'HOST': 'localhost',
-        'PORT': 3306,
+        #'NAME': 'mfit_django',
+        #'USER': 'root',
+        #'PASSWORD': 'dinossauro12',
+        #'HOST': 'localhost',
+        #'PORT': 3306,
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASS'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
