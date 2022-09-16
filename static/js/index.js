@@ -1,3 +1,5 @@
+atualizaIconeCarrinho()
+
 const botoesEscolher = document.querySelectorAll("[data-escolher]")
 
 botoesEscolher.forEach(btn => {
