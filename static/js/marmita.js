@@ -1,3 +1,4 @@
+atualizaIconeCarrinho()
 const btnEnviaCarrinho = document.getElementById("envia-carrinho")
 const controles = document.querySelectorAll("[data-controle]")
 const qtdMax = document.getElementById("qtd-marmitas")
