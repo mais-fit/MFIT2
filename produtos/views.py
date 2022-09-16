@@ -7,11 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from produtos.models import Kits, Marmitas
 
 
-# class KitList(ListView):
-#     model = Kit
-#     template_name = "index.html"
-#     queryset = Kit.objects.filter(ativo=True)
-
 def lista_kits(request):
     kits = Kits.objects.filter(ativo=True)
     return render(
@@ -23,18 +18,10 @@ def lista_kits(request):
     )
 
 
-# class MarmitaList(ListView):
-#     model = Marmita
-#     template_name: str = "marmita.html"
-#     queryset = Marmita.objects.filter(ativo=True)
-
 def lista_marmitas(request, kit_id):
     # rendereiza o kit escolhido e as marmitas a serem escolhidas
     marmitas = Marmitas.objects.filter(ativo=True)
     kit = Kits.objects.get(id=kit_id)
-    request.session["kit_id"] = kit.id
-    print(request.session["kit_id"])
-    print(request)
     return render(
                     request, 
                     "marmita.html", 
