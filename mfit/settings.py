@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'mfit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mfit_django',
+        'NAME': 'public',
         'USER': 'root',
-        'PASSWORD': 'dinossauro12',
-        'HOST': 'localhost',
+        'PASSWORD': 'estudo123',
+        'HOST': '0.0.0.0',
         'PORT': 3306,
     }
 }
