@@ -5,14 +5,18 @@ const inputQtdMarEscolhida = document.getElementById("qtd-escolhida")
 const kitId = document.getElementById("kit_id").value
 let qtdAtual = 0
 
-
+console.log("")
 btnEnviaCarrinho.disabled = true;
+carrinho.disabled = true;
 
-// é o produto a ser anexado na lista produtos dentro do localStorage
+let kit = JSON.parse(localStorage.getItem('kit')) || undefined
+
+// devemos validar se o kit não está indefinido
 let produto = {
-    "kit": kitId,
+    "kit": kit,
     "marmitas": []
 }
+
 
 // adiciona ações ao evento click dos botões de controle
 controles.forEach(ctrl => {
@@ -121,6 +125,7 @@ btnEnviaCarrinho.onclick = () => {
 
     let produtosStr = JSON.stringify(produtos)
     localStorage.setItem("produtos", produtosStr)
+    localStorage.setItem("kit", "")
 
     const qtdProdutos = document.getElementById("qtdProd")
     qtdProdutos.textContent = produtos.length
