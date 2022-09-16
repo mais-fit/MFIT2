@@ -11,12 +11,14 @@
 <h1>Carrinho de Compras</h1>
 
 <ul class="list-group mb-3">
+    <!-- renderizar os elementos html via javascript -->
+    <div id="placeholder">
 
-
+    </div>
     <li class="list-group-item py-3">
         <div class="text-end">
             <h4 class="text-dark mb-3">
-                Valor Total: R$ 63,84
+                Valor Total: R$ <span id="valor-total"></span>
             </h4>
             <a href="{% url 'index'%}" class="btn btn-outline-success btn-lg">
                 Continuar Comprando
