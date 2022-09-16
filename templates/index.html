@@ -65,33 +65,40 @@
 
     {% for kit in kits %}
         <div class="col-sm-6 col-lg-3">
-            <div class="card text-center bg-light">
-                <a href="#" class="position-absolute end-0 p-2 text-success">
-                    <i class="bi-bag" style="font-size: 24px; line-height: 24px;"></i>
-                </a>
-                <!-- Deve levar à tela de marmitas -->
-                <a href="{% url 'marmitas' kit.id %}">
-                    <!-- Colocar imagens de marmitas dos kits -->
-                    <img src="{% static 'img/'|add:kit.link %}" class="card-img-top">
-                </a>
-                <div class="card-header">
+            <div class="card text-center bg-light" data-kit="{{ kit.id }}">
+                <!-- Ícone do card -->
+                <i class="bi-bag position-absolute end-0 p-2 text-success" style="font-size: 24px; line-height: 24px;"></i>
+
+                <!-- Imagem ilustrativa -->
+                <img src="{% static 'img/'|add:kit.link %}" class="card-img-top" data-link="{{ kit.link }}">
+
+                <!-- Card header -->
+                <div class="card-header" data-valor="{{ kit.valor }}">
                     <!-- Converter o ponto para virgula -->
                     R$ {{ kit.valor }}
                 </div>
+                <!-- FIM Card header -->
+
+                <!-- Card Body -->
                 <div class="card-body">
-                    <!-- Mudar o campo do kit para nome -->
-                    <h5 class="card-title">{{ kit.descricao }}</h5>
+                    <!-- Na tabela kit deve haver um campo de descrição -->
+                    <h5 class="card-title" data-descricao="{{ kit.descricao }}">{{ kit.descricao }}</h5>
                     <p class="card-text truncar-3l">
-                        <!-- Na tabela kit deve haver um campo de descrição -->
-                        Escolha seu kit e aproveite suas refeições
+                        Escolha seu kit e aproveite suas {{ kit.qtd_max_marmitas }} refeições.
                     </p>
                 </div>
-                <div class="card-footer">
+                <!-- FIM Card Body -->
+
+                <!-- Card Footer -->
+                <div class="card-footer" data-qtd="{{ kit.qtd_max_marmitas }}">
                     <!-- Deve levar à tela de marmitas -->
-                    <a href="{% url 'marmitas' kit.id %}" class="btn btn-success mt-2 d-block">
-                        <span class="text-warning">Escolher este</span>
+                    <a href="#" class="btn btn-success mt-2 d-block text-warning" data-escolher>
+                        Escolher este
                     </a>
+
                 </div>
+                <!-- FIM Card Footer -->
+
             </div>
         </div>
     {% endfor %}
