@@ -76,10 +76,12 @@ WSGI_APPLICATION = 'mfit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+NAME = 'mfit_django'
+# NAME = 'dino_fit'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mfit_django',
+        'NAME': NAME,
         'USER': 'root',
         'PASSWORD': 'dinossauro12',
         'HOST': 'localhost',
