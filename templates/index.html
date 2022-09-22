@@ -39,27 +39,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12 col-md-5 col-lg-7">
-        <div class="justify-content-center justify-content-md-start mb-3 mb-md-0">
-            <img class="img-fluid img-thumbnail" src="{% static 'img/imagem-ilustrativa.jpg' %}" alt="">
-        </div>
-    </div>
-    <div class="col-12 col-md-7 col-lg-5">
-
-            <div class="d-flex flex-column justify-content-center justify-content-md-start">
-                <div class="d-inline-block me-3">
-                    <h3 class="display-3" >As melhores marmitas fit</h3>
-                    <p class="lead" >Todos os nossos produtos são produzidos com os melhores ingredientes e avaliados por nutricionistas.</p>
-                    <p class="lead">Nossa equipe de profissionais é qualificada e empenhada em entregar o melhor.</p>
-                    <p class="lead text-bg-success text-center" >Escolha seu kit logo abaixo.</p>
-                </div>
-            </div>
-
-    </div>
+<div class="row pb-3">
+    <h1>Escolha seu kit</h1>
 </div>
-
-<hr mt-3>
 
 <div class="row g-3">
 
@@ -106,6 +88,10 @@
 </div>
 
 <hr mt-3>
+
+<div class="row pt-3">
+    <img class="img-fluid" src="{% static 'img/imagem-ilustrativa.jpg' %}" alt="">
+</div>
 
 {% endblock %}
 
