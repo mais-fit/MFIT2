@@ -16,9 +16,10 @@ botoesEscolher.forEach(btn => {
 
         kit["id"] = kitId
         kit["descricao"] = descricao
-        kit["qtdMax"] = qtd
+        kit["qtdMaxMarmitas"] = qtd
         kit["valor"] = valor
         kit["link"] = link
+        kit["qtd"] = 1
 
         const kitStr = JSON.stringify(kit)
 
