@@ -6,9 +6,7 @@ const inputQtdMarEscolhida = document.getElementById("qtd-escolhida")
 const kitId = document.getElementById("kit_id").value
 let qtdAtual = 0
 
-console.log("")
 btnEnviaCarrinho.disabled = true;
-carrinho.disabled = true;
 
 let kit = JSON.parse(localStorage.getItem('kit')) || undefined
 
@@ -103,7 +101,6 @@ function removeMarmitaNoProduto(produto, marmitaId){
             if (marmita.marmita_id === marmitaId){
                 marmita.qtd_marmita -=1
                 if(marmita.qtd_marmita == 0){
-                    const indice = produto.marmitas.indexOf(marmita)
                     let novaListaMarmitas = produto.marmitas.filter((marmita)=>{
                         return (marmita.qtd_marmita != 0)
                     });
