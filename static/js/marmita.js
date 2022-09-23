@@ -12,6 +12,7 @@ let kit = JSON.parse(localStorage.getItem('kit')) || undefined
 
 // devemos validar se o kit não está indefinido
 let produto = {
+    "produto_id": uuidv4(),
     "kit": kit,
     "marmitas": []
 }
@@ -76,7 +77,6 @@ function adicionaMarmitaNoProduto(produto, marmitaId){
     // se a marmita existir vai apenas adicionar mais 1 a quantidade
     // se a marmita não existir criará o objeto marmita na lista
     let marmita = verificaMarmitaEmProduto(produto, marmitaId)
-
     if (marmita.length == 0) {
         // cria marmita no produto adicionando à lista de marmitas
         const marmita = {"marmita_id": marmitaId, "qtd_marmita": 1}
@@ -115,9 +115,7 @@ function removeMarmitaNoProduto(produto, marmitaId){
 // só pode ser habilitado quando qtdAtual == a qtdMax
 // essa função vai colocar no localStorage os produtos
 btnEnviaCarrinho.onclick = () => {
-    // verificar se já existe a key produtos no localStorage
-    // se a key não existir, criar uma lista de produtos e anexar nela
-    // o produto criado. Após, setar a lista de produtos no localStorage
+
     let produtos = JSON.parse(localStorage.getItem('produtos')) || []
     produtos.push(produto)
 
@@ -129,4 +127,11 @@ btnEnviaCarrinho.onclick = () => {
     qtdProdutos.textContent = produtos.length
 
     window.location = "/carrinho"
+}
+
+
+function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
 }
