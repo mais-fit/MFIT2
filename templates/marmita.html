@@ -25,9 +25,9 @@
                         <label for="qtd-escolhida" class="lead text-success">Quantidade de marmitas escolhidas:</label>
                         <input type="text" name="qtd-escolhida" id="qtd-escolhida" readonly class="text-center">
                     </div>
-                    <a href="#" class="btn btn-success mt-3 d-block text-warning" id="envia-carrinho" data-escolher>
+                    <button class="btn btn-success mt-3 d-block text-warning bi-cart" id="envia-carrinho" data-escolher>
                         Enviar para o carrinho
-                    </a>
+                    </button>
                     <input type="hidden" name="qtd-marmitas" id="qtd-marmitas" value="{{ kit.qtd_max_marmitas }}">
                     <input type="hidden" name="kit-id" id="kit_id" value="{{ kit.id }}">
                 </div>
@@ -40,11 +40,10 @@
 <div class="row g-3">
 
     {% for marmita in marmitas %}
-        <div class="col-sm-6 col-lg-3">
-            <div class="card text-center bg-light">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+            <div class="card text-center bg-light h-100">
                 <div href="#" class="position-absolute end-0 p-2 text-dark" data-placement="top" title="Tooltip na parte superior">
-                    <i class="bi-info-circle" style="font-size: 24px; line-height: 24px;">
-                    </i>
+                    <i class="bi-info-circle" style="font-size: 24px; line-height: 24px;"></i>
                 </div>
                 <!-- Deve levar à tela de marmitas -->
                 <div>
@@ -61,10 +60,10 @@
                 </div>
                 <div class="card-footer">
                     <div class="btn-group controle">
-                        <button class="btn btn-success" data-controle="+"> + </button>
+                        <button class="btn btn-success bi-caret-down" data-controle="-"></button>
                         <input type="hidden" name="marmita_id" id="marmita_id" value="{{ marmita.id }}">
                         <input type="text" readonly class="form-control text-center" id="qtdMarmita" value="0" data-contador style="font-size: 24px; line-height: 24px;">
-                        <button class="btn btn-success" data-controle="-"> - </button>
+                        <button class="btn btn-success bi-caret-up" data-controle="+"></button>
                     </div>
                 </div>
             </div>
