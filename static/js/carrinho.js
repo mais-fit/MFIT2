@@ -13,38 +13,10 @@ produtos.forEach(produto => {
     renderizaProduto(produto, placeHolder)
 });
 
-const controles = document.querySelectorAll("[data-controle]")
 
-function adicionaKit(inputQtd, kit_id){
-    inputQtd.value = parseInt(inputQtd.value) + 1;
-    produtos.forEach(produto => {
-        if (produto.kit.id == kit_id){
-            produto.kit.qtd += 1
-        }
-    })
-    localStorage.setItem("produtos", JSON.stringify(produtos))
-    spanValorTotal.innerText = totalizaProdutos(produtos).toString().replace(".", ",")
-}
-
-function removeKit(inputQtd, kit_id){
-    // reduz 1 da quantidade de kits
-    inputQtd.value = parseInt(inputQtd.value) - 1
-    produtos.forEach(produto => {
-        if (produto.kit.id == kit_id){
-            produto.kit.qtd -= 1
-        }
-    })
-    localStorage.setItem("produtos", JSON.stringify(produtos))
-    // caso a redução da quantidade chegue a zero excluo o produto
-    if (parseInt(inputQtd.value) == 0){
-        excluiKit(kit_id)
-    }
-    spanValorTotal.innerText = totalizaProdutos(produtos).toString().replace(".", ",")
-}
-
-function excluiKit(kit_id){
+function excluiKit(ProdutoId){
     let novosProdutos = produtos.filter(produto =>{
-        return (produto.kit.id != kit_id) 
+        return (produto.produto_id != ProdutoId) 
     })
     localStorage.setItem("produtos", JSON.stringify(novosProdutos))
     location.reload()
@@ -61,7 +33,6 @@ function totalizaProdutos(produtos){
     })
     return total
 }
-
 
 
 //cria os elementos html para renderizar cada produto (kit/marmitas) da lista
@@ -110,55 +81,22 @@ function renderizaProduto(produto, placeHolder){
 
     //criar os elementos da terceira div
     const groupBtn = document.createElement("div")
-    groupBtn.classList.add("input-group")
-
-    const btnMenos = document.createElement("button")
-    btnMenos.setAttribute("type", "button")
-    btnMenos.setAttribute("data-controle", "removeKit")
-    btnMenos.classList.add("btn", "btn-outline-dark", "btn-sm", "bi-caret-down")
-    btnMenos.onclick = evento => {
-        const operacao = evento.target.dataset.controle
-        const controle = evento.target.parentNode
-        const inputQtd = controle.querySelector("#qtd")
-        window[operacao](inputQtd, produto.kit.id)
-    }
-
-    const inputQtd = document.createElement("input")
-    inputQtd.setAttribute("type", "text")
-    inputQtd.setAttribute("disabled", "")
-    inputQtd.setAttribute("id", "qtd")
-    inputQtd.classList.add("form-control", "text-center", "border-dark")
-    inputQtd.value = produto.kit.qtd
-
-
-    const btnMais = document.createElement("button")
-    btnMais.setAttribute("type", "button")
-    btnMais.setAttribute("data-controle", "adicionaKit")
-    btnMais.classList.add("btn", "btn-outline-dark", "btn-sm", "bi-caret-up")
-    btnMais.onclick = evento => {
-        const operacao = evento.target.dataset.controle
-        const controle = evento.target.parentNode
-        const inputQtd = controle.querySelector("#qtd")
-        window[operacao](inputQtd, produto.kit.id)
-    }
+    groupBtn.classList.add("text-end")
 
     const btnLixeira = document.createElement("button")
     btnLixeira.setAttribute("type", "button")
-    btnLixeira.classList.add("btn", "btn-outline-danger", "border-dark", "btn-sm")
+    btnLixeira.classList.add("btn", "btn-outline-danger", "border-dark", "float-right")
     btnLixeira.onclick = () => {
 
-        excluiKit(produto.kit.id)
+        excluiKit(produto.produto_id)
     }
 
     const iconeLixeira = document.createElement("i")
-    iconeLixeira.setAttribute("style", "font-size: 16px; line-height: 16px;")
+    iconeLixeira.setAttribute("style", "font-size: 16px; line-height: 16px; padding: 30px;")
     iconeLixeira.classList.add("bi-trash")
 
     btnLixeira.appendChild(iconeLixeira)
 
-    groupBtn.appendChild(btnMenos)
-    groupBtn.appendChild(inputQtd)
-    groupBtn.appendChild(btnMais)
     groupBtn.appendChild(btnLixeira)
 
     const divValor = document.createElement("div")
